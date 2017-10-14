@@ -1,8 +1,8 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
-.controller('DashCtrl', function($scope) {})
+.controller('InfoCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('WakeupsCtrl', function($scope, Wakeups) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -11,18 +11,103 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.wakeups = Wakeups.all();
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('WakeupDetailCtrl', function($scope, $stateParams, Wakeups) {
+  $scope.wakeup = Wakeups.get($stateParams.wakeupId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('PhotoDetailCtrl', function($scope, $stateParams, Wakeups) {
+
+  function uploadSuccess(response) {
+        alert(response);
+        var data = JSON.parse(response.response);
+        /*
+        var clip_location = data.clip_location;
+        var text = data.text;
+        console.log(text, clip_location);
+        document.getElementById("loader").setAttribute("class", "");
+        $state.go('video', {text: text, clip_location: "http://172.16.102.47:7744/" + clip_location});
+        */
+    };
+
+    function uploadError(error) {
+        alert("upload error");
+        console.log(error);
+        // document.getElementById("loader").setAttribute("class", "");
+    }
+
+  function captureSuccess(mediaFiles) {
+    console.log("capture success");
+    var file = mediaFiles[0];
+    var options = new FileUploadOptions();
+    options.fileKey = "image";
+    options.fileName = "image.jpeg";
+    options.mimeType = "image/jpeg";
+    options.chunkedMode = false;
+    var ft = new FileTransfer();
+    ft.upload(
+        file.fullPath,
+        encodeURI("http://10.4.180.171:5000/users/e96aa001cec042588475ca861694c5f8/photos"),
+        uploadSuccess,
+        uploadError,
+        options
+    );
+    document.getElementById("loader").setAttribute("class", "visible");
+    alert(mediaFiles);
   };
+
+  function captureError(error) {
+    alert(error);
+  };
+
+  $scope.record = function() {
+    console.log("lets do photo started...");
+    // var options = {limit: 1};
+    navigator.device.capture.captureImage(captureSuccess, captureError);
+  }
+})
+
+.controller('SettingsCtrl', function($scope, $http) {
+  $scope.user_id = angular.fromJson(window.localStorage["personalData"]);
+  $scope.event = {
+    name: undefined,
+    wakeup_hour: 7,
+    punish_points: 3,
+    main_punish: 'Buy coffee for everyone.',
+    punishments: [],
+    dec_number: 15,
+    interval: 7,
+  };
+  $scope.current_rule = {
+    typ: 'punishment',
+    points: 1,
+    margin: 0,
+    days_in_row: 0
+  }
+
+  $scope.add_punishment = function() {
+    $scope.event.punishments.push(
+      Object.assign({}, $scope.current_rule)
+    );
+  };
+
+  $scope.remove_punishment = function(ind) {
+    $scope.event.punishments.splice(ind, 1);
+  };
+
+  $scope.check = function(v) {
+    return $scope.current_role.typ == v;
+  };
+
+    $scope.submit_form = function (is_valid) {
+      var tmp = Object.assign({}, $scope.event);
+      tmp['user_id'] = $scope.user_id;
+      tmp['rules'] = $scope.event.punishments;
+      var event_data_json = angular.toJson(tmp, true);
+      $scope.post_event_data = PostEventData.post(event_data_json);
+
+  };
+
 });

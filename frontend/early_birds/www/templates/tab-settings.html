@@ -1,0 +1,102 @@
+<ion-view view-title="Settings">
+  <ion-content>
+    <form name="settings_form" ng-submit="submit_form()" novalidate>
+      <div class="list">
+
+      <!-- EVENT NAME --!>
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-person"></i>
+          <span class="input-label">Event Name:</span>
+          <input type="text" ng-model="event.name" name="name"
+                 placeholder="Event Name" required></input>
+        </label>
+
+        <!-- WAKE UP HOUR --!>
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-person"></i>
+          <span class="input-label">Wake up Hour:</span>
+          <input type="number" ng-model="event.raw_hour" name="hour"
+                 placeholder="6:00" required></input>
+        </label>
+
+        <!-- Alarm clock decrement interval --!>
+        <label class="item item-stacked-label item-input">
+          <i class="icon ion-waterdrop"></i>
+          <span class="input-label">Alarm Clock Decrement Interval(in minutes):</span>
+          <input type="number" name="dec_interval" ng-model="event.interval"></input>
+        </label>
+
+        <!-- Alarm clock decrement number --!>
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-medkit"></i>
+          <span class="input-label">Alarm clock decrement number(in minutes):</span>
+          <input type="number" ng-model="event.dec_number" name="dec_number"></input>
+        </label>
+
+        <div class="item item-select item-stacked-label">
+          <div class="rule-heading">
+            Rules
+          </div>
+          <div class="list rules-list">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Type:</span>
+              <select class="select-type" name ="typ"
+                      ng-model="current_rule.typ" required>
+                  <option value="punishment" checked>Punishment</option>
+                  <option value="cheating">Cheating Punishment</option>
+                  <option value="prize">Prize</option>
+              </select>
+              </label>
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Points:</span>
+                <input type="number" ng-model="current_rule.points"
+                  name="points"></input>
+              </label>
+              <label  class="item item-input item-stacked-label">
+                <span class="input-label">Time Margin(in minutes):</span>
+                <input type="number" ng-model="current_rule.margin" name="margin"></input>
+              </label>
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Days in row:</span>
+                <input type="number" ng-model="current_rule.days_in_row" name="days_in_row"></input>
+              </label>
+              <button class="button" ng-click="add_punishment()">
+              +
+              </button>
+              <hr>
+              <div ng-repeat="p in event.punishments" class="item item-stacked-level punishment-show">
+                <h3>{{p.typ}}</h3>
+                <div class="punishment-details">
+                  <p>Points: {{p.points}}</p>
+                  <p>Time margin: {{p.margin}}</p>
+                  <p>Days in row: {{p.days_in_row}}</p>
+                </div>
+                <div class="punishment-remove-button">
+                  <button class="button" ng-click="remove_punishment($index)">
+                  X
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-document"></i>
+          <span class="input-label">Main Punishment:</span>
+          <input type="text" ng-model="event.main_punish" name="main_punish"
+                 placeholder="Buy coffee bonbon for everyone."></input>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-document"></i>
+          <span class="input-label">Main Punishment Points:</span>
+          <input type="number" ng-model="event.punish_points" name="punish_points"></input>
+        </label>
+
+      <div class="padding">
+        <button class="button button-positive button-block" type="submit">Zapisz</button>
+      </div>
+     </div>
+    </form>
+  </ion-content>
+</ion-view>

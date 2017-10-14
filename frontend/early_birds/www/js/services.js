@@ -1,10 +1,12 @@
+API_ADDRESS = ''
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('Wakeups', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
+  // TODO: GET HERE for event wakeups!
+  var wakeups = [{
     id: 0,
     name: 'Ben Sparrow',
     lastText: 'You on your way?',
@@ -33,18 +35,34 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
-      return chats;
+      return wakeups;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(wakeup) {
+      wakeups.splice(wakeups.indexOf(wakeup), 1);
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(id_) {
+      for (var i = 0; i < wakeups.length; i++) {
+        if (wakeups[i].id === parseInt(id_)) {
+          return wakeups[i];
         }
       }
       return null;
     }
   };
+})
+.factory('PostEventData', function ($window, $http) {
+    return {
+      post: function(data){
+        $http.post(API_ADDRESS + '/events/', data)
+        .then(function success(response){
+          console.log('success');
+          console.log(response);
+          window.localStorage["event"] = data;
+          alert("Pomyślnie zapisano dane!");
+        }, function error(response){
+          console.log('fail');
+          console.log(response);
+        });
+      },
+    };
 });
