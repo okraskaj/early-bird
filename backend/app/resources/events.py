@@ -42,11 +42,8 @@ class EventsResource(Resource):
         users = list(models.User.query.filter(
             models.User.email.in_(self.request_json.get('users')),
         ).all())
-        print(users)
-        users.append(
-            models.User.first_or_abort(app_id=self.request_json['user_id']),
-        )
-        print(users)
+        creator = models.User.first_or_abort(app_id=self.request_json['user_id'])
+        # users.append(creator)
         event = models.Event(
             name=self.request_json['name'],
             creator_id=self.request_json['user_id'],
@@ -56,4 +53,9 @@ class EventsResource(Resource):
         ).save(commit=True)
         event.rules_.extend(rules)
         event.users_.extend(users)
+        event.users_.append(creator)
+        creator.event_id = event.id
+        creator.event = event
+        print(creator)
+        creator.save(commit=True)
         return event.to_dict()

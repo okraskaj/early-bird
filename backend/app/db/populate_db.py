@@ -85,6 +85,7 @@ def populate_db():
             event=event,
         ),
     ]
+    event.users_.append(users[-1])
     db.session.add(event)
     db.session.add_all(photos)
     db.session.commit()
