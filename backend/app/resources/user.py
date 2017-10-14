@@ -5,7 +5,7 @@ from flask_restful import reqparse
 from datetime import datetime
 
 from app import config
-from app.db import db, models
+from app.db import models
 from ..flask_restful_extensions import Resource
 
 
@@ -52,7 +52,7 @@ class UsersPhotosResource(Resource):
         extension = os.path.splitext(imageFile.filename)[1]
         image_path = str(config.FILE_STORAGE / (str(uuid.uuid4()) + extension))
         imageFile.save(image_path)
-        user = models.User.first_or_abort(app_id=user_id)
+        user = models.User.first_or_abort(app_id=id_)
         event = user.event
         photo = models.Photo(
             upload_time=datetime.utcnow(),
