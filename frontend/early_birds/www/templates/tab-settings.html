@@ -80,6 +80,30 @@
           </div>
         </div>
 
+        <div class="item item-select item-stacked-label">
+          <div class="rule-heading">
+            Competitors
+          </div>
+          <div class="list rules-list">
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">E-mail:</span>
+                <input type="email" ng-model="mail.val" name="mail"></input>
+              </label>
+              <button class="button button-email" ng-click="add_email()">
+              +
+              </button>
+              <hr>
+              <div ng-repeat="e in event.users" class="item item-stacked-level email-show">
+                <h3>{{e}}</h3>
+                <div class="email-remove-button">
+                  <button class="button" ng-click="remove_email($index)">
+                  X
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+
         <label class="item item-input item-stacked-label">
           <i class="icon ion-document"></i>
           <span class="input-label">Main Punishment:</span>

@@ -71,6 +71,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 .controller('SettingsCtrl', function($scope, $http) {
   $scope.user_id = angular.fromJson(window.localStorage["personalData"]);
+  $scope.mail = {};
   $scope.event = {
     name: undefined,
     wakeup_hour: 7,
@@ -79,6 +80,7 @@ angular.module('starter.controllers', ['ngCordova'])
     punishments: [],
     dec_number: 15,
     interval: 7,
+    users: [],
   };
   $scope.current_rule = {
     typ: 'punishment',
@@ -97,16 +99,22 @@ angular.module('starter.controllers', ['ngCordova'])
     $scope.event.punishments.splice(ind, 1);
   };
 
-  $scope.check = function(v) {
-    return $scope.current_role.typ == v;
+  $scope.add_email = function() {
+    if ($scope.mail.val != null) {
+      $scope.event.users.push($scope.mail.val);
+    }
   };
 
-    $scope.submit_form = function (is_valid) {
-      var tmp = Object.assign({}, $scope.event);
-      tmp['user_id'] = $scope.user_id;
-      tmp['rules'] = $scope.event.punishments;
-      var event_data_json = angular.toJson(tmp, true);
-      $scope.post_event_data = PostEventData.post(event_data_json);
+  $scope.remove_email = function(ind) {
+    $scope.event.users.splice(ind, 1);
+  };
+
+  $scope.submit_form = function (is_valid) {
+    var tmp = Object.assign({}, $scope.event);
+    tmp['user_id'] = $scope.user_id;
+    tmp['rules'] = $scope.event.punishments;
+    var event_data_json = angular.toJson(tmp, true);
+    $scope.post_event_data = PostEventData.post(event_data_json);
 
   };
 
