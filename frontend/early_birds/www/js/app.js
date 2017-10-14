@@ -71,16 +71,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('tab.wakeup', {
-      url: '/wakeups/detail/:wakeupId',
-      views: {
-        'tab-wakeups': {
-          templateUrl: 'templates/wakeup-detail.html',
-          controller: 'WakeupDetailCtrl'
-        }
-      }
-    })
-
   .state('tab.photo', {
     url: '/wakeups/photo',
     views: {

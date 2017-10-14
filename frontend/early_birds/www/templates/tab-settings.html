@@ -40,8 +40,8 @@
           <div class="list rules-list">
             <label class="item item-input item-stacked-label">
               <span class="input-label">Type:</span>
-              <select class="select-type" name ="typ"
-                      ng-model="current_rule.typ" required>
+              <select class="select-type" name ="type"
+                      ng-model="current_rule.type" required>
                   <option value="punishment" checked>Punishment</option>
                   <option value="cheating">Cheating Punishment</option>
                   <option value="prize">Prize</option>
@@ -54,7 +54,8 @@
               </label>
               <label  class="item item-input item-stacked-label">
                 <span class="input-label">Time Margin(in minutes):</span>
-                <input type="number" ng-model="current_rule.margin" name="margin"></input>
+                <input type="number" ng-model="current_rule.time_margin"
+                name="time_margin"></input>
               </label>
               <label class="item item-input item-stacked-label">
                 <span class="input-label">Days in row:</span>
@@ -65,10 +66,10 @@
               </button>
               <hr>
               <div ng-repeat="p in event.punishments" class="item item-stacked-level punishment-show">
-                <h3>{{p.typ}}</h3>
+                <h3>{{p.type}}</h3>
                 <div class="punishment-details">
                   <p>Points: {{p.points}}</p>
-                  <p>Time margin: {{p.margin}}</p>
+                  <p>Time margin: {{p.time_margin}}</p>
                   <p>Days in row: {{p.days_in_row}}</p>
                 </div>
                 <div class="punishment-remove-button">
