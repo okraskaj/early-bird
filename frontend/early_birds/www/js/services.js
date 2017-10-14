@@ -1,4 +1,5 @@
-API_ADDRESS = ''
+API_URL = 'http://10.4.180.124:5000/'
+
 angular.module('starter.services', [])
 
 .factory('Wakeups', function() {
@@ -53,11 +54,11 @@ angular.module('starter.services', [])
 .factory('GetLatestWakeups', function ($window, $http) {
     return {
       get: function(data){
-        $http.get(API_ADDRESS + '/events/', data)
+        $http.get(API_URL + 'events', data)
         .then(function success(response){
-          window.localStorage["event"] = data;
+          window.localStorage["event"] = response.data;
           alert("Correctly get data!");
-          return data;
+          return response.data;
         }, function error(response){
           console.log('fail');
           console.log(response);
@@ -65,15 +66,37 @@ angular.module('starter.services', [])
       },
     };
 })
+.factory('GetUserData', function ($window, $http) {
+    return {
+      get: function(user_id){
+        var user_data = window.localStorage.getItem('personal_data')
+        if (user_data != null) {
+          alert(user_data);
+          return user_data;
+        }
+        $http.get(API_URL + 'users/' + user_id)
+        .then(function success(response){
+          alert(response.data);
+          window.localStorage.setItem("personal_data", response.data);
+          alert("Correctly get user data!");
+          return response.data;
+        }, function error(response){
+          alert(response.status);
+          alert(response);
+        });
+      },
+    };
+})
 .factory('PostEventData', function ($window, $http) {
     return {
       post: function(data){
-        $http.post(API_ADDRESS + '/events/', data)
+        $http.post(API_URL + 'events', data)
         .then(function success(response){
           console.log('success');
           console.log(response);
-          window.localStorage["event"] = data;
+          window.localStorage["event"] = respone.data;
           alert("Pomyślnie zapisano dane!");
+          return response.data;
         }, function error(response){
           console.log('fail');
           console.log(response);
