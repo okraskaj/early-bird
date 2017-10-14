@@ -46,9 +46,9 @@ class UsersPhotosResource(Resource):
     def post(self, id_):
         """Create new photo for given user."""
         parse = reqparse.RequestParser()
-        parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+        parse.add_argument('photo', type=werkzeug.datastructures.FileStorage, location='files')
         args = parse.parse_args()
-        imageFile = args['file']
+        imageFile = args['photo']
         extension = os.path.splitext(imageFile.filename)[1]
         image_path = str(config.FILE_STORAGE / (str(uuid.uuid4()) + extension))
         imageFile.save(image_path)
@@ -60,4 +60,4 @@ class UsersPhotosResource(Resource):
             user=user,
             event=event,
         ).save(commit=True)
-        return 200
+        return photo.to_dict(), 200

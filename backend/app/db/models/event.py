@@ -30,6 +30,8 @@ class Event(db.BaseModel):
     # TODO: always add creator to users
     creator_id = db.Column(db.Integer)
     hour = db.Column(db.Integer, nullable=False)
+    punish_points = db.Column(db.Integer, nullable=False)
+    main_punish = db.Column(db.String, nullable=False)
 
     rules_ = db.relationship('Rule', cascade='all, delete-orphan')
     users_ = db.relationship('User', back_populates='event')
@@ -42,7 +44,7 @@ class Event(db.BaseModel):
     @property
     def base_hour(self):
         return Time(
-            hours=self.hour // 60,
+            hours=(self.hour // 60) % 24,
             minutes=self.hour % 60,
         )
 

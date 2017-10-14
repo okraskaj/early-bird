@@ -1,0 +1,49 @@
+http://localhost:5000/
+GET hello-world
+
+http://localhost:5000/
+GET users?email="h@m"
+
+http://localhost:5000/
+POST users
+{
+    "name": "h",
+    "email": "h@m"
+}
+
+http://localhost:5000/
+GET users/b782a58e772049c1a3231ad37eb3
+
+
+http://localhost:5000/
+GET users/f3943a06fcab4ff5adb99620dd4ab3eb/photos?n=1123123
+
+http://localhost:5000/
+POST users/f3943a06fcab4ff5adb99620dd4ab3eb/photos
+
+
+http://localhost:5000/
+POST events
+{
+    "user_id": "634d57faa9dc46d58118ca6ea7ad0664",
+    "name": "wake up now!",
+    "wakeup_hour": 440,
+    "rules": [
+        {"type": "punishment", "time_margin": 12, "points": 1, "description": "A"},
+        {"type": "punishment", "time_margin": 42, "points": 2, "description": "AB"},
+        {"type": "prize", "points": 1, "days_in_row": 2, "description": "LOL"},
+        {"type": "cheating", "points": 3, "description": "OLOL"}
+    ],
+    "users": ["8bb2f425777242e9942379ae5f92896d",
+        "495787cf9b68458b93d668d9a71fc890"]
+}
+
+
+http://localhost:5000/
+POST report
+{
+    "photo_id": "d85b803f33fe4476970897b234a46248",
+    "user_id": "89ca27d1d2c24ebb91fed6daf90bbc59",
+    "verdict": false
+
+}
