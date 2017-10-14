@@ -6,7 +6,6 @@ class Rule(db.BaseModel):
     serializable_attrs = [
         'points',
         'type',
-        'description',
         'time_margin',
         'days_in_row',
     ]
@@ -19,7 +18,6 @@ class Rule(db.BaseModel):
     )
     points = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
     time_margin = db.Column(db.Integer, nullable=True)
     days_in_row = db.Column(db.Integer, nullable=True)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
@@ -28,7 +26,6 @@ class Rule(db.BaseModel):
         self,
         type,
         points,
-        description,
         time_margin=None,
         days_in_row=None,
     ):
@@ -41,7 +38,6 @@ class Rule(db.BaseModel):
             )
         super().__init__(
             points=points,
-            description=description,
             time_margin=time_margin,
             days_in_row=days_in_row,
             type=type,

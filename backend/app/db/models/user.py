@@ -39,7 +39,7 @@ class User(db.BaseModel):
 
     def to_dict(self):
         dict_ = super().to_dict()
-        if self.event:
+        if self.event_id:
             dict_['event_id'] = self.event.app_id
         return dict_
 
