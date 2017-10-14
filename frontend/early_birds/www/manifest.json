@@ -1,11 +1,11 @@
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "Early Bird",
+  "short_name": "Early Bird",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "icon.png",
-    "sizes": "512x512",
+    "src": "early_birdx256px.png",
+    "sizes": "256x256",
     "type": "image/png"
   }]
 }
