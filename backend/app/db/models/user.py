@@ -9,6 +9,7 @@ class User(db.BaseModel):
     serializable_attrs = [
         'penalty_points',
         'name',
+        # 'email',
         'app_id',
     ]
 
@@ -18,6 +19,7 @@ class User(db.BaseModel):
         autoincrement=True,
         nullable=False,
     )
+    email = db.Column(db.String, unique=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     app_id = db.Column(
         db.String,

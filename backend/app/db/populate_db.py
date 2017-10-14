@@ -6,25 +6,33 @@ from .database import db
 
 def populate_db():
     users = [
-        models.User(name='random'),
-        models.User(name='test'),
-        models.User(name='admin'),
+        models.User(name='random', email="rand@om.pl"),
+        models.User(name='test', email="test@op.pl"),
+        models.User(name='admin', email="hehe@jej.pl"),
     ]
     rules = [
         models.Rule(
+            type='punishment',
             points=1,
             description='So close to wake up on time!',
             time_margin=15,
         ),
         models.Rule(
+            type='punishment',
             points=2,
             description='So close to wake up on time!',
             time_margin=30,
         ),
         models.Rule(
+            type='prize',
             points=1,
-            description='So close to wake up on time!',
+            description='Congratulation!',
             days_in_row=3,
+        ),
+        models.Rule(
+            type='cheating',
+            points=1,
+            description='Congratulation!',
         ),
     ]
     db.session.add_all(users)
