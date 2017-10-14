@@ -1,3 +1,8 @@
+from pathlib import Path
+
+TOP = Path(__file__).parent.parent
+
+
 class BaseConfig:
     DEBUG = False
     TESTING = False
@@ -18,6 +23,7 @@ CONFIG_MAPPING = {
     'dev': DevConfig,
     'default': DevConfig,
 }
+FILE_STORAGE = TOP / 'app' / 'storage' / 'uploads'
 
 
 def get_config(config_name):

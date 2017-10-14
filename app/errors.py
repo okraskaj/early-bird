@@ -17,3 +17,11 @@ class UserNotFoundError(APIError):
             message or 'User with given ID not found.',
             status_code=404,
         )
+
+
+class EventNotFoundError(APIError):
+    def __init__(self, message=None):
+        super().__init__(
+            message or "There aren't any event's connected with that user.",
+            status_code=404,
+        )
