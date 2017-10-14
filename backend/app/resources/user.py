@@ -1,6 +1,11 @@
+import uuid
+import werkzeug
+import os
 from flask_restful import reqparse
+from datetime import datetime
 
-from ..db import models
+from app import config
+from app.db import db, models
 from ..flask_restful_extensions import Resource
 
 
@@ -40,5 +45,19 @@ class UsersPhotosResource(Resource):
 
     def post(self, id_):
         """Create new photo for given user."""
-        # TODO: add files posting
-        pass
+        parse = reqparse.RequestParser()
+        parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+        args = parse.parse_args()
+        imageFile = args['file']
+        extension = os.path.splitext(imageFile.filename)[1]
+        image_path = str(config.FILE_STORAGE / (str(uuid.uuid4()) + extension))
+        imageFile.save(image_path)
+        user = models.User.first_or_abort(app_id=user_id)
+        event = user.event
+        photo = models.Photo(
+            upload_time=datetime.utcnow(),
+            path=image_path,
+            user=user,
+            event=event,
+        ).save(commit=True)
+        return 200

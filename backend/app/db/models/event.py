@@ -2,7 +2,7 @@ from uuid import uuid4
 from collections import namedtuple
 
 from ..database import db
-
+from app.errors import EventNotFoundError
 Time = namedtuple('Time', ['hours', 'minutes'])
 
 
@@ -58,3 +58,10 @@ class Event(db.BaseModel):
         dict_ = super().to_dict()
         dict_['users'] = [user.app_id for user in self.users_]
         return dict_
+
+    @classmethod
+    def get_all_events(cls, **kwargs):
+        user = cls.query.filter_by(**kwargs)
+        if user is None:
+            raise EventNotFoundError('User with given id not found.')
+        return user
