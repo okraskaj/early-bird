@@ -10,7 +10,7 @@ class Event(db.BaseModel):
     __tablename__ = 'events'
     serializable_attrs = [
         'app_id',
-        'base_hour',
+        'wakeup_hour',
         'rules',
     ]
 
@@ -49,6 +49,10 @@ class Event(db.BaseModel):
     @property
     def rules(self):
         return [rule.to_dict() for rule in self.rules_]
+
+    @property
+    def wakeup_hour(self):
+        return '{}:{}'.format(self.base_hour.hours, self.base_hour.minutes)
 
     def to_dict(self):
         dict_ = super().to_dict()

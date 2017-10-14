@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from ..database import db
 
 
@@ -5,6 +7,7 @@ class Photo(db.BaseModel):
     __tablename__ = 'photos'
     serializable_attrs = [
         'upload_time',
+        'app_id',
         'path',
     ]
 
@@ -18,6 +21,12 @@ class Photo(db.BaseModel):
     path = db.Column(db.String, nullable=False, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    app_id = db.Column(
+        db.String,
+        nullable=False,
+        unique=True,
+        default=lambda: uuid4().hex,
+    )
 
     user = db.relationship('User', single_parent=True)
     event = db.relationship('Event', back_populates='photos')
