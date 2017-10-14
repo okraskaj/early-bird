@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 .controller('InfoCtrl', function($scope) {})
 
-.controller('WakeupsCtrl', function($scope, Wakeups) {
+.controller('WakeupsCtrl', function($scope, GetLatestWakeups, GetLatestWakeups) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -11,7 +11,11 @@ angular.module('starter.controllers', ['ngCordova'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.wakeups = Wakeups.all();
+  $scope.user_data = angular.fromJson(window.localStorage["personal_data"]);
+  $scope.wakeups = GetLatestWakeups.get({
+    user_id: user_data.id,
+    event_id: user_data.event_id,
+  });
 })
 
 .controller('WakeupDetailCtrl', function($scope, $stateParams, Wakeups) {

@@ -50,6 +50,21 @@ angular.module('starter.services', [])
     }
   };
 })
+.factory('GetLatestWakeups', function ($window, $http) {
+    return {
+      get: function(data){
+        $http.get(API_ADDRESS + '/events/', data)
+        .then(function success(response){
+          window.localStorage["event"] = data;
+          alert("Correctly get data!");
+          return data;
+        }, function error(response){
+          console.log('fail');
+          console.log(response);
+        });
+      },
+    };
+})
 .factory('PostEventData', function ($window, $http) {
     return {
       post: function(data){

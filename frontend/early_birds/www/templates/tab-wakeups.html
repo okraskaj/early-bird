@@ -1,21 +1,20 @@
 <ion-view view-title="Wakeups">
   <ion-content>
-    <!--
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right"
                 ng-repeat="wakeup in wakeups"
                 type="item-text-wrap" href="#/tab/wakeups/detail/{{wakeup.id}}">
-        <img ng-src="{{wakeup.face}}">
-        <h2>{{wakeup.name}}</h2>
-        <p>{{wakeup.lastText}}</p>
+        <img ng-src="{{wakeup.photo}}">
+        <h2>{{wakeup.user}}</h2>
+        <p>{{wakeup.time}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="console.log('a');">
+        <ion-option-button class="button-assertive" ng-click="alert('reported!');">
           Report
         </ion-option-button>
       </ion-item>
     </ion-list>
-    --!>
+    <!--
   <a href="#/tab/wakeups/photo"> PHOT! </a>
+    --!>
   </ion-content>
 </ion-view>
