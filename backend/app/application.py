@@ -1,6 +1,7 @@
 import importlib
 
 from flask import Flask
+from flask_cors import CORS
 
 from .db import db
 from .config import get_config
@@ -14,6 +15,7 @@ def init_app(config_name=None):
     # automatically register all api resources
     importlib.import_module('app.resources')
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(get_config(config_name))
     app.api = Api(
         app,

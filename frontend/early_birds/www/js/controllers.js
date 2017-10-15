@@ -1,30 +1,34 @@
-API_URL = 'http://10.4.180.124:5000/'
-USER_ID = "89ca27d1d2c24ebb91fed6daf90bbc59"
+API_URL = 'http://10.4.180.124:5000/';
+// API_URL = 'http://localhost:5000/';
+// API_URL = 'http://52.19.238.148:5000/';
+USER_ID = "89ca27d1d2c24ebb91fed6daf90bbc59";
 
 
 angular.module('starter.controllers', ['ngCordova'])
 
 .controller('InfoCtrl', function($scope, $http, GetLatestWakeups) {})
 
-.controller('WakeupsCtrl', function($scope, $http, GetUserData, GetLatestWakeups) {
+.controller('WakeupsCtrl', function($scope, $http, $window, GetUserData, GetLatestWakeups) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
   $scope.$on('$ionicView.enter', function(e) {
-    alert("LOL!");
-    $scope.user_data = GetUserData.get(USER_ID);
-    alert(user_data);
-    $scope.wakeups = GetLatestWakeups.get({
-      user_id: user_data.id,
-      event_id: user_data.event_id,
+    GetUserData.get(USER_ID);
+    $scope.user_data = window.localStorage.getItem('user_data');
+    alert("id = " + $scope.user_data['id']);
+    GetLatestWakeups.get({
+      user_id: $scope.user_data.id,
+      event_id: $scope.user_data.event_id,
     });
+    $scope.event = window.localStorage.getItem('event');
+    $scope.wakeups = $scope.event.photos;
     alert($scope.user_data);
   });
 })
 
-.controller('PhotoDetailCtrl', function($scope, $http, $stateParams, Wakeups) {
+.controller('PhotoDetailCtrl', function($scope, $http, $stateParams, GetLatestWakeups) {
 
   function uploadSuccess(response) {
         alert(response);

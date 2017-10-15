@@ -22,7 +22,7 @@ def populate_db():
             app_id="d85b803f33fe4476970897b234a46248",
         ),
         models.User(
-            name='Łukasz',
+            name='Lukasz',
             email="lukasz@op.pl",
             app_id="89ca27d1d2c24ebb91fed6daf90bbc59",
         ),

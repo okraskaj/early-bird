@@ -9,6 +9,7 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+    SECRET_KEY = 'the quick brown fox jumps over the lazy   dog'
 
 
 class DevConfig:

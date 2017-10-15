@@ -1,65 +1,18 @@
-API_URL = 'http://10.4.180.124:5000/'
+API_URL = 'http://10.4.180.124:5000/';
+// API_URL = 'http://localhost:5000/';
+// API_URL = 'http://52.19.238.148:5000/';
 
 angular.module('starter.services', [])
-
-.factory('Wakeups', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  // TODO: GET HERE for event wakeups!
-  var wakeups = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return wakeups;
-    },
-    remove: function(wakeup) {
-      wakeups.splice(wakeups.indexOf(wakeup), 1);
-    },
-    get: function(id_) {
-      for (var i = 0; i < wakeups.length; i++) {
-        if (wakeups[i].id === parseInt(id_)) {
-          return wakeups[i];
-        }
-      }
-      return null;
-    }
-  };
-})
 .factory('GetLatestWakeups', function ($window, $http) {
     return {
-      get: function(data){
-        $http.get(API_URL + 'events', data)
-        .then(function success(response){
-          window.localStorage["event"] = response.data;
+      get: function(data) {
+        $http.get(API_URL + 'events/', {params: data})
+        .then(function success(response) {
+          alert(JSON.stringify(response.data));
+          window.localStorage.setItem("event", JSON.stringify(response.data));
           alert("Correctly get data!");
-          return response.data;
-        }, function error(response){
+          // return response.data;
+        }, function error(response) {
           console.log('fail');
           console.log(response);
         });
@@ -68,23 +21,27 @@ angular.module('starter.services', [])
 })
 .factory('GetUserData', function ($window, $http) {
     return {
-      get: function(user_id){
-        var user_data = window.localStorage.getItem('personal_data')
+      get: function(user_id) {
+        window.localStorage.clear();
+        var user_data = window.localStorage['user_data'];
         if (user_data != null) {
-          alert(user_data);
-          return user_data;
+          alert('GET USER DATA FROM LOCALSTORAGE!');
+          // return user_data;
         }
-        $http.get(API_URL + 'users/' + user_id)
-        .then(function success(response){
-          alert(response.data);
-          window.localStorage.setItem("personal_data", response.data);
-          alert("Correctly get user data!");
-          return response.data;
-        }, function error(response){
-          alert(response.status);
-          alert(response);
-        });
-      },
+        alert("user_data = " + user_id);
+        $http.get(API_URL + 'users/' + user_id).then(
+          function success(response) {
+            alert(JSON.stringify(response.data));
+            window.localStorage.setItem("user_data", JSON.stringify(response.data));
+            alert("Correctly get user data!");
+            // return response.data;
+          }, function error(response) {
+            window.localStorage.setItem("user_data", "");
+            alert("data =", JSON.stringify(response.data));
+            alert('CHUJ!');
+          }
+        );
+      }
     };
 })
 .factory('PostEventData', function ($window, $http) {
@@ -96,7 +53,7 @@ angular.module('starter.services', [])
           console.log(response);
           window.localStorage["event"] = respone.data;
           alert("Pomyślnie zapisano dane!");
-          return response.data;
+          // return response.data;
         }, function error(response){
           console.log('fail');
           console.log(response);
